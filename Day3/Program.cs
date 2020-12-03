@@ -1,4 +1,4 @@
-﻿using System;
+sing System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,17 +11,17 @@ namespace Assignment2
         static void Main()
         {
             Console.WriteLine("manager");
-            Manager m1 = new Manager("Anushree", 6000000, 1, "HR");
-            Console.WriteLine("name " + m1.NAME);
-            Console.WriteLine("net salary == " + m1.CalNetSalary());
+            Manager m1 = new Manager("Anushree", 700000, 1, "HR");
+            Console.WriteLine("name "+m1.NAME);
+            Console.WriteLine("net salary == "+m1.CalNetSalary());
             Console.WriteLine("===========================================");
             Console.WriteLine("general manager");
-            GeneralManager gm1 = new GeneralManager("Supriya", 900000, 1, "GM", "abcde");
+            GeneralManager gm1 = new GeneralManager("Supriya", 500000, 1, "GM", "abccc");
             Console.WriteLine("name " + gm1.NAME);
             Console.WriteLine("net salary == " + gm1.CalNetSalary());
             Console.WriteLine("===========================================");
             Console.WriteLine("CEO");
-            CEO c1 = new CEO("Ashwini", 700000, 4);
+            CEO c1 = new CEO("Pradnya",800000,4);
             Console.WriteLine("name " + c1.NAME);
             Console.WriteLine("net salary == " + c1.CalNetSalary());
             Console.WriteLine("===========================================");
@@ -29,13 +29,14 @@ namespace Assignment2
         }
     }
 
+    #region Employee
     public abstract class Employee
     {
         private string name;
         private int empNo;
         private short deptNo;
-        private decimal basic;
-        private int lastEmpNo = 0;
+        protected decimal basic;
+        private int lastEmpNo=0;
 
         public String NAME
         {
@@ -47,7 +48,7 @@ namespace Assignment2
                 }
                 else
                 {
-                    Console.WriteLine("please enter valid input!!");
+                    Console.WriteLine("wrong input!!! please enter valid input!!");
                 }
             }
 
@@ -57,7 +58,7 @@ namespace Assignment2
             }
         }
 
-
+ 
 
         public int EMPNO
         {
@@ -71,7 +72,7 @@ namespace Assignment2
         {
             set;
             get;
-
+            
         }
 
         public short DEPTNO
@@ -98,7 +99,7 @@ namespace Assignment2
         {
             EMPNO = ++lastEmpNo;
         }
-        public Employee(string NAME = "noname", decimal BASIC = 140000, short DEPTNO = 1)
+        public Employee(string NAME="noname",decimal BASIC=150000,short DEPTNO=1)
         {
             EMPNO = ++lastEmpNo;
             this.NAME = NAME;
@@ -106,19 +107,34 @@ namespace Assignment2
             this.DEPTNO = DEPTNO;
         }
         public abstract decimal CalNetSalary();
-
+       
     }
+    #endregion
 
+    #region Manager
     public class Manager : Employee
     {
-
-        public override decimal BASIC { set; get; }
+        
+        public override decimal BASIC 
+        { 
+            set 
+            {
+                if (value >= 10000 && value <= 1500000)
+                    basic = value;
+                else
+                    Console.WriteLine("Enter valid basic");
+            }
+            get 
+            {
+                return basic;
+            }
+        }
 
         private string designation;
         public string DESIGNATION
         {
-
-            set
+            
+            set 
             {
 
                 if (value != "")
@@ -128,11 +144,11 @@ namespace Assignment2
                 else
                 {
                     Console.WriteLine("invalid name");
-                }
-
+                }    
+            
             }
-            get
-            {
+            get 
+            { 
                 return designation;
             }
         }
@@ -141,21 +157,23 @@ namespace Assignment2
         {
             decimal hra = 50000;
             decimal da = 60000;
-            decimal netSalary = BASIC + hra + da;
+            decimal netSalary = BASIC + hra +da ;
             return netSalary;
         }
 
-        public Manager(string NAME = "noname", decimal BASIC = 600000, short DEPTNO = 5, String DESIGNATION = "HR") : base(NAME, BASIC, DEPTNO)
+        public Manager(string NAME="noname",decimal BASIC=600000,short DEPTNO=5,String DESIGNATION="HR") : base(NAME,BASIC,DEPTNO)
         {
-
-            this.DESIGNATION = DESIGNATION;
+           
+            this.DESIGNATION =DESIGNATION;
             this.NAME = NAME;
             this.BASIC = BASIC;
             this.DEPTNO = DEPTNO;
-
+            
         }
     }
+    #endregion
 
+    #region GM
     public class GeneralManager : Manager
     {
         private string perks;
@@ -164,38 +182,69 @@ namespace Assignment2
         {
             set;
             get;
-
+           
         }
-
-        public GeneralManager(string NAME = "noname", decimal BASIC = 700000, short DEPTNO = 3, String DESIGNATION = "gm", string PERKS = "xyz") : base(NAME, BASIC, DEPTNO, DESIGNATION)
+       
+        public GeneralManager(string NAME="noname", decimal BASIC=700000, short DEPTNO=3, String DESIGNATION="gm",string PERKS="xyz"):base(NAME, BASIC, DEPTNO,DESIGNATION)
         {
-
+           
             this.PERKS = PERKS;
             this.DESIGNATION = DESIGNATION;
             this.NAME = NAME;
             this.BASIC = BASIC;
             this.DEPTNO = DEPTNO;
         }
-    }
 
+        public override decimal BASIC
+        {
+            set
+            {
+                if (value >= 10000 && value <= 1500000)
+                    basic = value;
+                else
+                    Console.WriteLine("Enter valid basic");
+            }
+            get
+            {
+                return basic;
+            }
+        }
+    }
+    #endregion
+
+    #region CEO
     public class CEO : Employee
     {
-        public CEO(string NAME = "noname", decimal BASIC = 900000, short DEPTNO = 6) : base(NAME, BASIC, DEPTNO)
+        public CEO(string NAME = "noname", decimal BASIC = 900000, short DEPTNO = 6) :base(NAME,BASIC,DEPTNO)
         {
-
+            
             this.NAME = NAME;
             this.BASIC = BASIC;
             this.DEPTNO = DEPTNO;
         }
-        public override decimal BASIC { get; set; }
+        public override decimal BASIC
+        {
+            set
+            {
+                if (value >= 10000 && value <= 1500000)
+                    basic = value;
+                else
+                    Console.WriteLine("Enter valid basic");
+            }
+            get
+            {
+                return basic;
+            }
+        }
 
         public sealed override decimal CalNetSalary()
         {
-            decimal hra = 50000;
-            decimal da = 60000;
+            decimal hra = 40000;
+            decimal da = 50000;
             decimal netSalary = BASIC + hra + da;
             return netSalary;
         }
     }
 
 }
+#endregion
